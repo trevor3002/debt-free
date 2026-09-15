@@ -1,0 +1,18 @@
+{
+  "name": "Debt Free",
+  "short_name": "Debt Free",
+  "description": "Personal debt payoff and money reset tracker",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#07090d",
+  "theme_color": "#080b10",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
