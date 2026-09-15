@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>Debt Free</title>
+
+<meta name="theme-color" content="#080b10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Debt Free">
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-512.png">
+
+<style>
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    background: #07090d;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "SF Pro Text", Arial, sans-serif;
+    background:
+        radial-gradient(circle at top, #17202c 0%, #07090d 38%);
+    color: #f4f7fb;
+    min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.app {
+    width: 100%;
+    max-width: 760px;
+    margin: auto;
+    padding: 18px;
+}
+
+/* HEADER */
+
+.header {
+    padding-top: max(10px, env(safe-area-inset-top));
+    margin-bottom: 18px;
+}
+
+.logo-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: #58e38b;
+}
+
+.subtitle {
+    color: #8f9aaa;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+.icon-button {
+    width: 42px;
+    height: 42px;
+    border: 1px solid #26303d;
+    background: #10151d;
+    color: white;
+    border-radius: 14px;
+    font-size: 18px;
+}
+
+/* HERO */
+
+.hero {
+    background:
+        linear-gradient(145deg, #17231f, #0c1312 60%, #0a0e12);
+    border: 1px solid #24382e;
+    border-radius: 24px;
+    padding: 22px;
+    margin-bottom: 14px;
+    box-shadow: 0 15px 45px rgba(0,0,0,.28);
+}
+
+.hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.hero-label {
+    color: #58e38b;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hero h1 {
+    margin: 6px 0 4px;
+    font-size: 30px;
+    letter-spacing: -1px;
+}
+
+.hero p {
+    color: #aab5c1;
+    margin: 0;
+    line-height: 1.45;
+    font-size: 14px;
+}
+
+.percent {
+    font-size: 27px;
+    font-weight: 800;
+    color: #58e38b;
+}
+
+.progress {
+    height: 10px;
+    background: #1d252d;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #43d879, #7cf5a6);
+    border-radius: inherit;
+    transition: width .35s ease;
+}
+
+/* CARDS */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.card {
+    background: rgba(15,20,28,.94);
+    border: 1px solid #202936;
+    border-radius: 19px;
+    padding: 17px;
+}
+
+.card-label {
+    color: #84909f;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.card-value {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+}
+
+.green {
+    color: #58e38b;
+}
+
+.orange {
+    color: #ffbd66;
+}
+
+.red {
+    color: #ff7373;
+}
+
+.section {
+    background: rgba(13,18,25,.96);
+    border: 1px solid #202936;
+    border-radius: 21px;
+    padding: 18px;
+    margin-bottom: 14px;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.section-title h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.section-title small {
+    color: #758191;
+}
+
+/* MONTH TABS */
+
+.month-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 3px;
+    margin-bottom: 15px;
+}
+
+.month-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.month-tab {
+    flex: 0 0 auto;
+    border: 1px solid #293442;
+    background: #111720;
+    color: #9da8b6;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.month-tab.active {
+    background: #58e38b;
+    color: #07100b;
+    border-color: #58e38b;
+}
+
+/* DEBTS */
+
+.debt {
+    border: 1px solid #242e3a;
+    background: #10151d;
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.debt:last-child {
+    margin-bottom: 0;
+}
+
+.debt-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.debt-name {
+    font-weight: 750;
+}
+
+.debt-amount {
+    font-weight: 800;
+}
+
+.debt-meta {
+    color: #788493;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.debt-progress {
+    height: 7px;
+    background: #242c35;
+    border-radius: 20px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+.debt-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #58e38b;
+    border-radius: inherit;
+    transition: width .3s;
+}
+
+.debt-controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 11px;
+}
+
+.debt-controls input {
+    width: 100%;
+    background: #0b1016;
+    color: white;
+    border: 1px solid #293442;
+    border-radius: 10px;
+    padding: 10px;
+    outline: none;
+}
+
+.debt-controls button {
+    border: 0;
+    background: #1b2530;
+    color: #dce4ec;
+    border-radius: 10px;
+    padding: 0 13px;
+    font-weight: 700;
+}
+
+/* CHECKLIST */
+
+.check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 0;
+    border-bottom: 1px solid #202731;
+}
+
+.check-item:last-child {
+    border-bottom: 0;
+}
+
+.check-item input {
+    width: 21px;
+    height: 21px;
+    accent-color: #58e38b;
+}
+
+.check-item label {
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.check-item.done label {
+    color: #667280;
+    text-decoration: line-through;
+}
+
+/* INPUTS */
+
+.input-group {
+    margin-bottom: 14px;
+}
+
+.input-group:last-child {
+    margin-bottom: 0;
+}
+
+.input-group label {
+    display: block;
+    color: #8793a2;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.input,
+textarea,
+select {
+    width: 100%;
+    border: 1px solid #293442;
+    background: #0b1016;
+    color: white;
+    border-radius: 12px;
+    padding: 12px;
+    outline: none;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.input:focus,
+textarea:focus,
+select:focus {
+    border-color: #58e38b;
+}
+
+/* BUTTONS */
+
+.primary {
+    width: 100%;
+    border: 0;
+    border-radius: 13px;
+    padding: 13px;
+    background: #58e38b;
+    color: #07100b;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+.secondary {
+    width: 100%;
+    border: 1px solid #293442;
+    border-radius: 13px;
+    padding: 12px;
+    background: #111720;
+    color: #e3e9ef;
+    font-weight: 700;
+    margin-top: 9px;
+}
+
+.danger {
+    border-color: #593034;
+    color: #ff9090;
+}
+
+/* ROADMAP */
+
+.roadmap {
+    display: grid;
+    gap: 9px;
+}
+
+.roadmap-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background: #10151d;
+    border: 1px solid #242e3a;
+    border-radius: 14px;
+}
+
+.roadmap-icon {
+    font-size: 19px;
+}
+
+.roadmap-title {
+    font-weight: 750;
+    font-size: 13px;
+}
+
+.roadmap-text {
+    color: #7f8b99;
+    font-size: 12px;
+    margin-top: 3px;
+    line-height: 1.4;
+}
+
+/* MILESTONES */
+
+.milestone {
+    padding: 13px;
+    border-radius: 13px;
+    border: 1px solid #26313d;
+    background: #10151d;
+    margin-bottom: 9px;
+}
+
+.milestone:last-child {
+    margin-bottom: 0;
+}
+
+.milestone-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.badge {
+    font-size: 11px;
+    padding: 5px 8px;
+    border-radius: 8px;
+    background: #1c2530;
+    color: #7f8b99;
+}
+
+.badge.done {
+    background: #173624;
+    color: #58e38b;
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    color: #66717f;
+    font-size: 11px;
+    padding: 10px 0 30px;
+}
+
+/* MODAL */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.75);
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 50;
+    padding: 12px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 700px;
+    background: #111720;
+    border: 1px solid #293442;
+    border-radius: 22px;
+    padding: 20px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.modal-box h2 {
+    margin-top: 0;
+}
+
+.close {
+    float: right;
+    border: 0;
+    background: #202936;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+}
+
+/* TOAST */
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: calc(20px + env(safe-area-inset-bottom));
+    transform: translateX(-50%) translateY(120px);
+    background: #eafdf0;
+    color: #08120c;
+    padding: 12px 17px;
+    border-radius: 13px;
+    font-weight: 750;
+    font-size: 13px;
+    opacity: 0;
+    transition: .3s;
+    z-index: 100;
+    white-space: nowrap;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+    .app {
+        padding: 14px;
+    }
+
+    .hero h1 {
+        font-size: 27px;
+    }
+
+    .card-value {
+        font-size: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <header class="header">
+        <div class="logo-row">
+            <div>
+                <div class="logo">Debt<span>Free</span></div>
+                <div class="subtitle">Your money reset dashboard</div>
+            </div>
+
+            <button class="icon-button" onclick="openSettings()">⚙️</button>
+        </div>
+    </header>
+
+    <!-- HERO -->
+
+    <section class="hero">
+        <div class="hero-top">
+            <div>
+                <div class="hero-label" id="heroLabel">Month 1 · Reset</div>
+                <h1 id="heroTitle">Break the cycle.</h1>
+                <p id="heroText">
+                    Clear the cycle loans and start keeping your money instead of borrowing it again.
+                </p>
+            </div>
+
+            <div class="percent" id="debtPercent">0%</div>
+        </div>
+
+        <div class="progress">
+            <div class="progress-fill" id="overallProgress"></div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="card-label">Total debt remaining</div>
+            <div class="card-value red" id="totalDebt">R0.00</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">Amount paid</div>
+            <div class="card-value green" id="amountPaid">R0.00</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">Payday</div>
+            <div class="card-value orange" id="paydayCountdown">—</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">Monthly debt budget</div>
+            <div class="card-value" id="monthlyDebtBudget">R5,200</div>
+        </div>
+
+    </div>
+
+    <!-- MONTHS -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <h2>Roadmap</h2>
+            <small>Stay on track</small>
+        </div>
+
+        <div class="month-tabs">
+
+            <button class="month-tab active" onclick="changeMonth(1)">
+                Month 1
+            </button>
+
+            <button class="month-tab" onclick="changeMonth(2)">
+                Month 2
+            </button>
+
+            <button class="month-tab" onclick="changeMonth(3)">
+                Month 3
+            </button>
+
+            <button class="month-tab" onclick="changeMonth(4)">
+                Month 4+
+            </button>
+
+        </div>
+
+        <div id="monthContent"></div>
+
+    </section>
+
+    <!-- DEBTS -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <h2>Your debts</h2>
+            <small>Edit anytime</small>
+        </div>
+
+        <div id="debtList"></div>
+
+    </section>
+
+    <!-- ATTACK PLAN -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <h2>Debt attack</h2>
+            <small>Your target</small>
+        </div>
+
+        <div class="input-group">
+
+            <label>Debt I'm attacking</label>
+
+            <select id="targetDebt" onchange="saveTarget()"></select>
+
+        </div>
+
+        <div class="input-group">
+
+            <label>Planned monthly payment</label>
+
+            <input
+                class="input"
+                id="plannedPayment"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="5200"
+                oninput="savePayment()"
+            >
+
+        </div>
+
+        <div id="attackProjection"></div>
+
+    </section>
+
+    <!-- CHECKLIST -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <h2>Month 1 checklist</h2>
+            <small id="checkCount">0/8</small>
+        </div>
+
+        <div id="checklist"></div>
+
+    </section>
+
+    <!-- MILESTONES -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <h2>Milestones</h2>
+            <small>Keep going</small>
+        </div>
+
+        <div id="milestones"></div>
+
+    </section>
+
+    <!-- SETTLEMENT -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <h2>Settlement / attorney notes</h2>
+            <small>Keep records</small>
+        </div>
+
+        <div class="input-group">
+
+            <label>Offer amount</label>
+
+            <input
+                class="input"
+                id="settlement"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Example: 4354.08"
+                oninput="saveSettlement()"
+            >
+
+        </div>
+
+        <div class="input-group">
+
+            <label>Offer date</label>
+
+            <input
+                class="input"
+                id="offerDate"
+                type="date"
+                onchange="saveOfferDate()"
+            >
+
+        </div>
+
+        <div class="input-group">
+
+            <label>Notes</label>
+
+            <textarea
+                id="notes"
+                placeholder="Example: Verify full-and-final settlement before paying."
+                oninput="saveNotes()"
+            ></textarea>
+
+        </div>
+
+    </section>
+
+    <!-- ACTIONS -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <h2>Backup</h2>
+            <small>Protect your data</small>
+        </div>
+
+        <button class="primary" onclick="exportBackup()">
+            Export Backup
+        </button>
+
+        <button class="secondary" onclick="document.getElementById('importFile').click()">
+            Import Backup
+        </button>
+
+        <input
+            id="importFile"
+            type="file"
+            accept=".json,application/json"
+            style="display:none"
+            onchange="importBackup(event)"
+        >
+
+    </section>
+
+    <div class="footer">
+        Debt Free • Your money. Your plan. Your future.
+    </div>
+
+</div>
+
+<!-- SETTINGS MODAL -->
+
+<div class="modal" id="settingsModal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeSettings()">×</button>
+
+        <h2>Settings</h2>
+
+        <p style="color:#8b97a5;font-size:13px;">
+            Your data is stored locally on this device.
+        </p>
+
+        <button class="secondary" onclick="restoreStartingBalances()">
+            Restore Starting Debt Balances
+        </button>
+
+        <button class="secondary" onclick="showInstallHelp()">
+            📱 Add Debt Free to iPhone Home Screen
+        </button>
+
+        <button class="secondary danger" onclick="clearAllData()">
+            Clear All App Data
+        </button>
+
+    </div>
+
+</div>
+
+<div class="toast" id="toast">Saved</div>
+
+<script>
+
+/* =========================================================
+   STARTING DEBTS
+========================================================= */
+
+const STARTING_DEBTS = {
+    "PrimeLoans": 1231,
+    "LendPlus Loans": 4710,
+    "Unify Loans": 1208.57,
+    "FinChoice": 4750,
+    "Bank / Credit Card": 10885.21,
+    "Old Phone Contract": 18000
+};
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const STORAGE = {
+    debts: "debtFreeDebts",
+    checklist: "debtFreeChecklist",
+    target: "debtFreeTarget",
+    payment: "debtFreePayment",
+    settlement: "debtFreeSettlement",
+    offerDate: "debtFreeOfferDate",
+    notes: "debtFreeNotes",
+    month: "debtFreeMonth"
+};
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+let debts = loadJSON(STORAGE.debts, STARTING_DEBTS);
+let checklistState = loadJSON(
+    STORAGE.checklist,
+    {}
+);
+
+let targetDebt = localStorage.getItem(STORAGE.target) || "PrimeLoans";
+let plannedPayment = Number(localStorage.getItem(STORAGE.payment) || 5200);
+let currentMonth = Number(localStorage.getItem(STORAGE.month) || 1);
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function money(value) {
+
+    return "R" + Number(value || 0).toLocaleString(
+        "en-ZA",
+        {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    );
+
+}
+
+function loadJSON(key, fallback) {
+
+    try {
+
+        const value = localStorage.getItem(key);
+
+        return value ? JSON.parse(value) : fallback;
+
+    } catch {
+
+        return fallback;
+
+    }
+
+}
+
+function saveJSON(key, value) {
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(value)
+    );
+
+}
+
+function showToast(message = "Saved") {
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 1800);
+
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateDashboard() {
+
+    const startingTotal = Object.values(STARTING_DEBTS)
+        .reduce((a,b) => a + b, 0);
+
+    const remainingTotal = Object.values(debts)
+        .reduce((a,b) => a + Math.max(0, Number(b)), 0);
+
+    const paid = Math.max(
+        0,
+        startingTotal - remainingTotal
+    );
+
+    const percent = startingTotal > 0
+        ? Math.min(
+            100,
+            (paid / startingTotal) * 100
+        )
+        : 0;
+
+    document.getElementById("totalDebt")
+        .textContent = money(remainingTotal);
+
+    document.getElementById("amountPaid")
+        .textContent = money(paid);
+
+    document.getElementById("debtPercent")
+        .textContent = percent.toFixed(1) + "%";
+
+    document.getElementById("overallProgress")
+        .style.width = percent + "%";
+
+    updatePayday();
+
+}
+
+/* =========================================================
+   PAYDAY COUNTDOWN
+========================================================= */
+
+function updatePayday() {
+
+    const now = new Date();
+
+    let payday = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        25,
+        0,
+        0,
+        0
+    );
+
+    if (now >= payday) {
+
+        payday = new Date(
+            now.getFullYear(),
+            now.getMonth() + 1,
+            25,
+            0,
+            0,
+            0
+        );
+
+    }
+
+    const diff = payday - now;
+
+    const days = Math.floor(
+        diff / (1000 * 60 * 60 * 24)
+    );
+
+    const hours = Math.floor(
+        (diff / (1000 * 60 * 60)) % 24
+    );
+
+    document.getElementById("paydayCountdown")
+        .textContent = days + "d " + hours + "h";
+
+}
+
+/* =========================================================
+   DEBT LIST
+========================================================= */
+
+function renderDebts() {
+
+    const container = document.getElementById("debtList");
+
+    container.innerHTML = "";
+
+    const startingTotal = Object.values(STARTING_DEBTS)
+        .reduce((a,b) => a + b, 0);
+
+    Object.entries(debts).forEach(
+        ([name, balance]) => {
+
+            const starting = STARTING_DEBTS[name] || balance;
+
+            const paid = Math.max(
+                0,
+                starting - balance
+            );
+
+            const percent = starting > 0
+                ? Math.min(
+                    100,
+                    (paid / starting) * 100
+                )
+                : 100;
+
+            const div = document.createElement("div");
+
+            div.className = "debt";
+
+            div.innerHTML = `
+
+                <div class="debt-head">
+
+                    <div>
+                        <div class="debt-name">
+                            ${escapeHTML(name)}
+                        </div>
+
+                        <div class="debt-meta">
+                            ${percent.toFixed(0)}% paid
+                        </div>
+                    </div>
+
+                    <div class="debt-amount">
+                        ${money(balance)}
+                    </div>
+
+                </div>
+
+                <div class="debt-progress">
+                    <div
+                        class="debt-progress-fill"
+                        style="width:${percent}%"
+                    ></div>
+                </div>
+
+                <div class="debt-controls">
+
+                    <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value="${Number(balance).toFixed(2)}"
+                        aria-label="Balance for ${escapeHTML(name)}"
+                    >
+
+                    <button>
+                        Save
+                    </button>
+
+                </div>
+
+            `;
+
+            const input =
+                div.querySelector("input");
+
+            const button =
+                div.querySelector("button");
+
+            button.onclick = () => {
+
+                const value =
+                    Math.max(
+                        0,
+                        Number(input.value || 0)
+                    );
+
+                debts[name] = value;
+
+                saveJSON(
+                    STORAGE.debts,
+                    debts
+                );
+
+                renderDebts();
+                renderTargetOptions();
+                renderAttackProjection();
+                renderMilestones();
+                updateDashboard();
+
+                showToast("Debt updated");
+
+            };
+
+            container.appendChild(div);
+
+        }
+    );
+
+}
+
+/* =========================================================
+   TARGET DEBT
+========================================================= */
+
+function renderTargetOptions() {
+
+    const select =
+        document.getElementById("targetDebt");
+
+    select.innerHTML = "";
+
+    Object.keys(debts).forEach(name => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = name;
+        option.textContent =
+            name + " — " + money(debts[name]);
+
+        if (name === targetDebt) {
+            option.selected = true;
+        }
+
+        select.appendChild(option);
+
+    });
+
+    if (!debts[targetDebt]) {
+
+        targetDebt =
+            Object.keys(debts)[0];
+
+        localStorage.setItem(
+            STORAGE.target,
+            targetDebt
+        );
+
+    }
+
+}
+
+/* =========================================================
+   ATTACK PROJECTION
+========================================================= */
+
+function renderAttackProjection() {
+
+    const container =
+        document.getElementById("attackProjection");
+
+    const balance =
+        Number(debts[targetDebt] || 0);
+
+    const payment =
+        Math.max(
+            0,
+            Number(plannedPayment || 0)
+        );
+
+    if (balance <= 0) {
+
+        container.innerHTML = `
+            <div class="roadmap-item">
+                <div class="roadmap-icon">🎉</div>
+                <div>
+                    <div class="roadmap-title">
+                        Debt cleared
+                    </div>
+                    <div class="roadmap-text">
+                        This debt has been eliminated.
+                    </div>
+                </div>
+            </div>
+        `;
+
+        return;
+
+    }
+
+    if (payment <= 0) {
+
+        container.innerHTML = `
+            <div class="roadmap-item">
+                <div class="roadmap-icon">🎯</div>
+                <div>
+                    <div class="roadmap-title">
+                        Set a payment amount
+                    </div>
+                    <div class="roadmap-text">
+                        Enter the amount you plan to pay each month.
+                    </div>
+                </div>
+            </div>
+        `;
+
+        return;
+
+    }
+
+    const months =
+        Math.ceil(balance / payment);
+
+    const afterOne =
+        Math.max(
+            0,
+            balance - payment
+        );
+
+    container.innerHTML = `
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-icon">🎯</div>
+
+            <div>
+
+                <div class="roadmap-title">
+                    Attack plan
+                </div>
+
+                <div class="roadmap-text">
+                    ${money(payment)} planned monthly.
+                    After one payment: ${money(afterOne)} remaining.
+                    Estimated payoff: about ${months} month${months === 1 ? "" : "s"}.
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+/* =========================================================
+   SAVE TARGET / PAYMENT
+========================================================= */
+
+function saveTarget() {
+
+    targetDebt =
+        document.getElementById("targetDebt").value;
+
+    localStorage.setItem(
+        STORAGE.target,
+        targetDebt
+    );
+
+    renderAttackProjection();
+
+    showToast("Target updated");
+
+}
+
+function savePayment() {
+
+    plannedPayment =
+        Math.max(
+            0,
+            Number(
+                document.getElementById("plannedPayment").value || 0
+            )
+        );
+
+    localStorage.setItem(
+        STORAGE.payment,
+        plannedPayment
+    );
+
+    renderAttackProjection();
+
+}
+
+/* =========================================================
+   CHECKLIST
+========================================================= */
+
+const CHECKLIST = [
+
+    "Set aside rent + electricity",
+
+    "Netflix",
+
+    "Pay PrimeLoans — final cycle payment, DO NOT re-borrow",
+
+    "Pay LendPlus — final cycle payment, DO NOT re-borrow",
+
+    "Pay Unify",
+
+    "Use stocked food",
+
+    "Keep age-restricted product spending at R0",
+
+    "Keep personal/random spending at R0"
+
+];
+
+function renderChecklist() {
+
+    const container =
+        document.getElementById("checklist");
+
+    container.innerHTML = "";
+
+    let completed = 0;
+
+    CHECKLIST.forEach(
+        (item, index) => {
+
+            const checked =
+                checklistState[index] === true;
+
+            if (checked) {
+                completed++;
+            }
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "check-item" +
+                (checked ? " done" : "");
+
+            div.innerHTML = `
+
+                <input
+                    type="checkbox"
+                    id="check-${index}"
+                    ${checked ? "checked" : ""}
+                >
+
+                <label for="check-${index}">
+                    ${escapeHTML(item)}
+                </label>
+
+            `;
+
+            const checkbox =
+                div.querySelector("input");
+
+            checkbox.addEventListener(
+                "change",
+                () => {
+
+                    checklistState[index] =
+                        checkbox.checked;
+
+                    saveJSON(
+                        STORAGE.checklist,
+                        checklistState
+                    );
+
+                    renderChecklist();
+
+                }
+            );
+
+            container.appendChild(div);
+
+        }
+    );
+
+    document.getElementById("checkCount")
+        .textContent =
+        completed + "/" + CHECKLIST.length;
+
+}
+
+/* =========================================================
+   ROADMAP
+========================================================= */
+
+function changeMonth(month) {
+
+    currentMonth = month;
+
+    localStorage.setItem(
+        STORAGE.month,
+        month
+    );
+
+    document.querySelectorAll(".month-tab")
+        .forEach(
+            (button, index) => {
+
+                button.classList.toggle(
+                    "active",
+                    index + 1 === month
+                );
+
+            }
+        );
+
+    renderMonthContent();
+
+}
+
+function renderMonthContent() {
+
+    const container =
+        document.getElementById("monthContent");
+
+    if (currentMonth === 1) {
+
+        container.innerHTML = `
+
+            <div class="roadmap">
+
+                <div class="roadmap-item">
+                    <div class="roadmap-icon">🧱</div>
+                    <div>
+                        <div class="roadmap-title">
+                            Break the cycle
+                        </div>
+                        <div class="roadmap-text">
+                            Pay the two cycle loans one final time and don't replace them with new borrowing.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-icon">💰</div>
+                    <div>
+                        <div class="roadmap-title">
+                            Keep your remaining cash
+                        </div>
+                        <div class="roadmap-text">
+                            Your first reset month leaves an estimated R1,964 buffer based on the current plan.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-icon">📋</div>
+                    <div>
+                        <div class="roadmap-title">
+                            Follow the checklist
+                        </div>
+                        <div class="roadmap-text">
+                            Keep unnecessary spending at zero during the reset month.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        `;
+
+    } else if (currentMonth === 2) {
+
+        container.innerHTML = `
+
+            <div class="roadmap">
+
+                <div class="roadmap-item">
+                    <div class="roadmap-icon">🚀</div>
+                    <div>
+                        <div class="roadmap-title">
+                            Attack debt
+                        </div>
+                        <div class="roadmap-text">
+                            With the cycle loans gone, your normal budget has about R5,200 available for debt each month.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-icon">🛡️</div>
+                    <div>
+                        <div class="roadmap-title">
+                            Protect your buffer
+                        </div>
+                        <div class="roadmap-text">
+                            Don't immediately spend every rand you free up.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        `;
+
+    } else if (currentMonth === 3) {
+
+        container.innerHTML = `
+
+            <div class="roadmap">
+
+                <div class="roadmap-item">
+                    <div class="roadmap-icon">🔥</div>
+                    <div>
+                        <div class="roadmap-title">
+                            Keep the momentum
+                        </div>
+                        <div class="roadmap-text">
+                            Continue directing your available debt budget toward your chosen target.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-icon">📈</div>
+                    <div>
+                        <div class="roadmap-title">
+                            Watch the percentage
+                        </div>
+                        <div class="roadmap-text">
+                            Your goal is to keep increasing the debt-free percentage every month.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        `;
+
+    } else {
+
+        container.innerHTML = `
+
+            <div class="roadmap">
+
+                <div class="roadmap-item">
+                    <div class="roadmap-icon">🏁</div>
+                    <div>
+                        <div class="roadmap-title">
+                            Stay consistent
+                        </div>
+                        <div class="roadmap-text">
+                            Keep paying down debt until the dashboard reaches 100%.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-icon">💎</div>
+                    <div>
+                        <div class="roadmap-title">
+                            Debt Free
+                        </div>
+                        <div class="roadmap-text">
+                            Once everything reaches R0, your next goal is keeping it that way.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+/* =========================================================
+   MILESTONES
+========================================================= */
+
+function renderMilestones() {
+
+    const container =
+        document.getElementById("milestones");
+
+    const startingTotal =
+        Object.values(STARTING_DEBTS)
+            .reduce((a,b) => a + b, 0);
+
+    const remaining =
+        Object.values(debts)
+            .reduce((a,b) => a + Math.max(0,b), 0);
+
+    const paid =
+        startingTotal - remaining;
+
+    const milestones = [
+
+        {
+            title: "PrimeLoans eliminated",
+            done: debts["PrimeLoans"] <= 0
+        },
+
+        {
+            title: "LendPlus eliminated",
+            done: debts["LendPlus Loans"] <= 0
+        },
+
+        {
+            title: "R5,000 paid",
+            done: paid >= 5000
+        },
+
+        {
+            title: "R10,000 paid",
+            done: paid >= 10000
+        },
+
+        {
+            title: "50% debt-free",
+            done: paid >= startingTotal * .5
+        },
+
+        {
+            title: "75% debt-free",
+            done: paid >= startingTotal * .75
+        },
+
+        {
+            title: "100% DEBT FREE",
+            done: remaining <= 0
+        }
+
+    ];
+
+    container.innerHTML = "";
+
+    milestones.forEach(m => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "milestone";
+
+        div.innerHTML = `
+
+            <div class="milestone-row">
+
+                <div style="font-weight:700;">
+                    ${m.title}
+                </div>
+
+                <div class="badge ${m.done ? "done" : ""}">
+                    ${m.done ? "✓ DONE" : "LOCKED"}
+                </div>
+
+            </div>
+
+        `;
+
+        container.appendChild(div);
+
+    });
+
+}
+
+/* =========================================================
+   SETTLEMENT / NOTES
+========================================================= */
+
+function saveSettlement() {
+
+    localStorage.setItem(
+        STORAGE.settlement,
+        document.getElementById("settlement").value
+    );
+
+}
+
+function saveOfferDate() {
+
+    localStorage.setItem(
+        STORAGE.offerDate,
+        document.getElementById("offerDate").value
+    );
+
+}
+
+function saveNotes() {
+
+    localStorage.setItem(
+        STORAGE.notes,
+        document.getElementById("notes").value
+    );
+
+}
+
+/* =========================================================
+   BACKUP EXPORT
+========================================================= */
+
+function exportBackup() {
+
+    const backup = {
+
+        version: 1,
+
+        debts,
+
+        checklistState,
+
+        targetDebt,
+
+        plannedPayment,
+
+        currentMonth,
+
+        settlement:
+            document.getElementById("settlement").value,
+
+        offerDate:
+            document.getElementById("offerDate").value,
+
+        notes:
+            document.getElementById("notes").value,
+
+        exportedAt:
+            new Date().toISOString()
+
+    };
+
+    const blob =
+        new Blob(
+            [JSON.stringify(backup, null, 2)],
+            {type:"application/json"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "Debt_Free_Backup.json";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+    showToast("Backup exported");
+
+}
+
+/* =========================================================
+   BACKUP IMPORT
+========================================================= */
+
+function importBackup(event) {
+
+    const file =
+        event.target.files[0];
+
+    if (!file) return;
+
+    const reader =
+        new FileReader();
+
+    reader.onload = function() {
+
+        try {
+
+            const data =
+                JSON.parse(reader.result);
+
+            if (
+                !data ||
+                typeof data !== "object" ||
+                !data.debts
+            ) {
+
+                throw new Error("Invalid backup");
+
+            }
+
+            debts = data.debts;
+
+            checklistState =
+                data.checklistState || {};
+
+            targetDebt =
+                data.targetDebt || "PrimeLoans";
+
+            plannedPayment =
+                Number(data.plannedPayment || 5200);
+
+            currentMonth =
+                Number(data.currentMonth || 1);
+
+            localStorage.setItem(
+                STORAGE.debts,
+                JSON.stringify(debts)
+            );
+
+            localStorage.setItem(
+                STORAGE.checklist,
+                JSON.stringify(checklistState)
+            );
+
+            localStorage.setItem(
+                STORAGE.target,
+                targetDebt
+            );
+
+            localStorage.setItem(
+                STORAGE.payment,
+                plannedPayment
+            );
+
+            localStorage.setItem(
+                STORAGE.month,
+                currentMonth
+            );
+
+            localStorage.setItem(
+                STORAGE.settlement,
+                data.settlement || ""
+            );
+
+            localStorage.setItem(
+                STORAGE.offerDate,
+                data.offerDate || ""
+            );
+
+            localStorage.setItem(
+                STORAGE.notes,
+                data.notes || ""
+            );
+
+            loadFormValues();
+
+            renderAll();
+
+            showToast("Backup restored");
+
+        } catch {
+
+            alert(
+                "That file is not a valid Debt Free backup."
+            );
+
+        }
+
+        event.target.value = "";
+
+    };
+
+    reader.readAsText(file);
+
+}
+
+/* =========================================================
+   RESTORE STARTING BALANCES
+========================================================= */
+
+function restoreStartingBalances() {
+
+    const confirmed =
+        confirm(
+            "Restore all debts to their original starting balances?"
+        );
+
+    if (!confirmed) return;
+
+    debts =
+        JSON.parse(
+            JSON.stringify(STARTING_DEBTS)
+        );
+
+    saveJSON(
+        STORAGE.debts,
+        debts
+    );
+
+    renderAll();
+
+    closeSettings();
+
+    showToast("Starting balances restored");
+
+}
+
+/* =========================================================
+   CLEAR DATA
+========================================================= */
+
+function clearAllData() {
+
+    const confirmed =
+        confirm(
+            "This will erase your saved Debt Free data on this device. Continue?"
+        );
+
+    if (!confirmed) return;
+
+    Object.values(STORAGE)
+        .forEach(key =>
+            localStorage.removeItem(key)
+        );
+
+    location.reload();
+
+}
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function openSettings() {
+
+    document.getElementById(
+        "settingsModal"
+    ).classList.add("show");
+
+}
+
+function closeSettings() {
+
+    document.getElementById(
+        "settingsModal"
+    ).classList.remove("show");
+
+}
+
+function showInstallHelp() {
+
+    alert(
+        "On iPhone:\n\n" +
+        "1. Open Debt Free in Safari.\n" +
+        "2. Tap the Share button.\n" +
+        "3. Tap Add to Home Screen.\n" +
+        "4. Tap Add.\n\n" +
+        "You can then open Debt Free from your Home Screen like an app."
+    );
+
+}
+
+/* =========================================================
+   FORM VALUES
+========================================================= */
+
+function loadFormValues() {
+
+    document.getElementById("settlement").value =
+        localStorage.getItem(
+            STORAGE.settlement
+        ) || "";
+
+    document.getElementById("offerDate").value =
+        localStorage.getItem(
+            STORAGE.offerDate
+        ) || "";
+
+    document.getElementById("notes").value =
+        localStorage.getItem(
+            STORAGE.notes
+        ) || "";
+
+    document.getElementById("plannedPayment").value =
+        plannedPayment;
+
+}
+
+/* =========================================================
+   SECURITY / HTML ESCAPE
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+/* =========================================================
+   RENDER ALL
+========================================================= */
+
+function renderAll() {
+
+    updateDashboard();
+
+    renderDebts();
+
+    renderTargetOptions();
+
+    renderAttackProjection();
+
+    renderChecklist();
+
+    renderMilestones();
+
+    renderMonthContent();
+
+    document.querySelectorAll(".month-tab")
+        .forEach(
+            (button,index) => {
+
+                button.classList.toggle(
+                    "active",
+                    index + 1 === currentMonth
+                );
+
+            }
+        );
+
+}
+
+/* =========================================================
+   START
+========================================================= */
+
+loadFormValues();
+
+renderAll();
+
+setInterval(
+    updatePayday,
+    60000
+);
+
+/* =========================================================
+   SERVICE WORKER
+========================================================= */
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            navigator.serviceWorker
+                .register("./sw.js")
+                .catch(
+                    error =>
+                        console.log(
+                            "Service worker registration failed:",
+                            error
+                        )
+                );
+
+        }
+    );
+
+}
+
+</script>
+
+</body>
+</html>
